@@ -45,7 +45,7 @@ fi
 
 PASSWORD=`openssl rand -hex 16`
 set-env PATH '/app/.heroku/vendor/redis/bin:$PATH'
-set-env REDIS_URL "redis://h:$PASSWORD@localhost:6379/"
-echo "echo requirepass $PASSWORD | redis-server - &> /dev/null &" >> $PROFILE_PATH
+set-env VOLATILE_REDIS_URL "redis://h:$PASSWORD@localhost:7000/"
+echo "redis-server --requirepass $PASSWORD --port 7000 --maxmemory 1024mb --maxmemory-policy allkeys-lru &> /dev/null &" >> $PROFILE_PATH
 
 echo "Done" | indent
